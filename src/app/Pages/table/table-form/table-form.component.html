@@ -1,0 +1,25 @@
+
+<div class="container" *ngIf="!okForm">
+  <h2>Créer une table de jeu</h2>
+  <div class="formulaire">
+    <form [formGroup]="tableForm" (ngSubmit)="onSaveNameAndPlayers()">
+      <div class="form-group">
+        <label for="name">Pseudo:</label>
+        <input type="text" id="name" class="form-control" formControlName="name">
+      </div>
+      <div class="form-group">
+        <label for="nbPlayers">Combien de joueurs ?</label>
+        <select id="nbPlayers" class="form-control" formControlName="playersNumber">
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-success" [disabled]="tableForm.invalid">Créer la table</button>
+    </form>
+  </div>
+</div>
+

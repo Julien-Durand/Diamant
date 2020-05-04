@@ -3,14 +3,26 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { TableComponent } from './Pages/table/table.component';
+import { BoardGameComponent } from './Pages/board-game/board-game.component';
+import { RulesGameComponent } from './Pages/rules-game/rules-game.component';
+import { MainComponent } from './Pages/main/main.component';
+import { TableFormComponent } from './Pages/table/table-form/table-form.component';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    TableComponent,
+    BoardGameComponent,
+    RulesGameComponent,
+    MainComponent,
+    TableFormComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
