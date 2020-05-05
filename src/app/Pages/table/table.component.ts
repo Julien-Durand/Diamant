@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import * as firebase from 'firebase';
 import DataSnapshot = firebase.database.DataSnapshot;
-import {GameServiceService} from '../../services/game-service.service';
+import {RoomTableService} from '../../services/RoomTable.service';
 import {TableRoom} from '../../Models/TableRoom.model';
 import {Subscription} from 'rxjs';
 
@@ -16,7 +16,7 @@ export class TableComponent implements OnInit, OnDestroy {
   roomSubscription: Subscription;
 
   constructor(private router: Router,
-              private gameService: GameServiceService) { }
+              private gameService: RoomTableService) { }
 
   ngOnInit(): void {
     this.roomSubscription = this.gameService.RoomSubject.subscribe(

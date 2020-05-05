@@ -1,7 +1,5 @@
 export class TableRoom {
 
-  IdTable: string;
-
-  constructor(public idTable: string, public Master: string, public Playersmax: number) {
+  constructor(public idTable: string, public Master: string, public Playersmax: number, public countPlayer: number, public isOk: boolean) {
   }
 }

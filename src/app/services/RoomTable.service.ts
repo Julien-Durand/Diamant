@@ -7,7 +7,7 @@ import {Subject} from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class GameServiceService {
+export class RoomTableService {
 
   tableRoom: TableRoom[] = [];
   RoomSubject = new Subject<TableRoom[]>();
@@ -37,5 +37,9 @@ export class GameServiceService {
         this.tableRoom = data.val() ? data.val() : [];
         this.emitTableRoom();
       });
+  }
+
+  updateNewRoom(){
+
   }
 }
