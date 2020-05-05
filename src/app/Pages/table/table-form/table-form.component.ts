@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {GameServiceService} from '../../../services/game-service.service';
+import * as firebase from 'firebase';
+import {Router} from '@angular/router';
+import {TableRoom} from '../../../Models/TableRoom.model';
 
 @Component({
   selector: 'app-table-form',
@@ -10,10 +13,12 @@ import {GameServiceService} from '../../../services/game-service.service';
 export class TableFormComponent implements OnInit {
 
   tableForm: FormGroup;
-   okForm: boolean;
+  okForm: boolean;
+  IdTable: string;
 
   constructor(private formBuilder: FormBuilder,
-              private gameService: GameServiceService) { }
+              private gameService: GameServiceService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -27,11 +32,13 @@ export class TableFormComponent implements OnInit {
       });
   }
 
-  onSaveNameAndPlayers() {
+  onSaveNewRoom() {
     const name = this.tableForm.get('name').value;
     const playersNumber = this.tableForm.get('playersNumber').value;
-    this.gameService.createPlayersTable(name, playersNumber);
-    this.okForm = true;
+    const idTable = this.gameService.idGenerator();
+    const newRoom = new TableRoom(idTable, name, playersNumber);
+    this.gameService.createNewRoom(newRoom);
+    this.router.navigate(['/Table']);
   }
 
 }

@@ -13,9 +13,9 @@ export class MainComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  //Method for routing the start btn on the first page
+  //routing the actions on the first page
   onNewTable() {
-    this.router.navigate(['/Table']);
+    this.router.navigate(['/Creation']);
   }
   onRules() {
     this.router.navigate(['/Regles']);

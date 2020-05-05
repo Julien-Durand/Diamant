@@ -2,7 +2,7 @@
 <div class="container" *ngIf="!okForm">
   <h2>Créer une table de jeu</h2>
   <div class="formulaire">
-    <form [formGroup]="tableForm" (ngSubmit)="onSaveNameAndPlayers()">
+    <form [formGroup]="tableForm" (ngSubmit)="onSaveNewRoom()">
       <div class="form-group">
         <label for="name">Pseudo:</label>
         <input type="text" id="name" class="form-control" formControlName="name">
