@@ -1,12 +1,13 @@
 <div class="container">
+  <h1>{{id}}</h1>
   <div class="row" *ngFor="let room of tableRoom">
     <h2>Table : {{ room.idTable }} </h2>
 
     <h3>Joueurs : {{ room.countPlayer }}/ {{room.Playersmax}} </h3>
 
     <ul class="list-group">
-      <li class="list-group-item-success">{{ room.Master }}</li>
-      <li class="list-group-item-success"></li>
+      <li class="list-group-item-success">{{ room.tabPlayerNames }}</li>
+<!--      <li class="list-group-item-success" *ngFor="let list of tableRoom">{{}}</li>-->
     </ul>
     <button class="btn btn-primary"  [disabled]="!room.isOk">Lancer la partie</button>
   </div>

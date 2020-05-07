@@ -21,7 +21,7 @@ export class MainComponent implements OnInit {
     this.router.navigate(['/Regles']);
   }
   joinTable() {
-    this.router.navigate(['']);
+    this.router.navigate(['Join']);
   }
 
 }

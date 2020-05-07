@@ -9,6 +9,7 @@ import { RulesGameComponent } from './Pages/rules-game/rules-game.component';
 import { MainComponent } from './Pages/main/main.component';
 import { TableFormComponent } from './Pages/table/table-form/table-form.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import { JoinTableFormComponent } from './Pages/table/join-table-form/join-table-form.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import {ReactiveFormsModule} from '@angular/forms';
     BoardGameComponent,
     RulesGameComponent,
     MainComponent,
-    TableFormComponent
+    TableFormComponent,
+    JoinTableFormComponent
   ],
   imports: [
     BrowserModule,

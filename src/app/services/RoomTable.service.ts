@@ -22,24 +22,39 @@ export class RoomTableService {
     return '' +  Math.random().toString(36).substr(2, 9);
   }
 
-  savTableRoom(){
-    firebase.database().ref('/NewRoom').set(this.tableRoom);
+  savTableRoom(id: string){
+    firebase.database().ref('/TableRoom/'+id).set(this.tableRoom);
   }
-  createNewRoom(tableRoom: TableRoom){
+  createNewRoom(tableRoom: TableRoom, id: string){
     this.tableRoom.push(tableRoom);
-    this.savTableRoom();
+    this.savTableRoom(id);
     this.emitTableRoom();
   }
 
-  getNewRoom() {
-    firebase.database().ref('/NewRoom')
+  getNewRoom(id: string) {
+    firebase.database().ref('/TableRoom/' + id)
       .on('value', (data: DataSnapshot) => {
         this.tableRoom = data.val() ? data.val() : [];
         this.emitTableRoom();
       });
   }
 
-  updateNewRoom(){
+  // getRoomById(id: string) {
+  //   return new Promise(
+  //     (resolve, reject) => {
+  //       firebase.database().ref('/TableRoom/' + id).once('value').then(
+  //         (data: DataSnapshot) => {
+  //           resolve(data.val());
+  //         }, (error) => {
+  //           reject(error);
+  //         }
+  //       );
+  //     }
+  //   );
+  // }
 
+  updateNewRoom(id: string, name: string){
+    firebase.database().ref('/TableRoom/'+id+'/0/Players/').set(name);
   }
+
 }
