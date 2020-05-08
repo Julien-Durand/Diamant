@@ -39,22 +39,38 @@ export class RoomTableService {
       });
   }
 
-  // getRoomById(id: string) {
-  //   return new Promise(
-  //     (resolve, reject) => {
-  //       firebase.database().ref('/TableRoom/' + id).once('value').then(
-  //         (data: DataSnapshot) => {
-  //           resolve(data.val());
-  //         }, (error) => {
-  //           reject(error);
-  //         }
-  //       );
-  //     }
-  //   );
-  // }
+  getRoomById(id: string) {
+    // return new Promise(
+    //   (resolve, reject) => {
+    //     firebase.database().ref('/TableRoom/' + id + '/0/PlayerName').once('value').then(
+    //       (data: DataSnapshot) => {
+    //         resolve(data.val());
+    //       }, (error) => {
+    //         reject(error);
+    //       }
+    //     );
+    //   }
+    // );
+    firebase.database().ref('/TableRoom/' + id + '/0/PlayerName')
+      .on('value',(snap) => {
+      console.log(snap.val());
+    });
+  }
 
   updateNewRoom(id: string, name: string){
-    firebase.database().ref('/TableRoom/'+id+'/0/Players/').set(name);
+    // this.getRoomById(id).
+    //   then(PlayerName => {
+    //     console.log('PlayerName', PlayerName);
+    //     console.log(PlayerName.count);
+    // })
+    // .catch(err => {
+    //   console.log(err);
+    // });
+    // this.getRoomById(id).then(
+    //   PlayerName => console.log(PlayerName)
+    // );
+    const nametab = [name]
+    firebase.database().ref('/TableRoom/'+id+'/0/PlayerName/').push(nametab);
   }
 
 }

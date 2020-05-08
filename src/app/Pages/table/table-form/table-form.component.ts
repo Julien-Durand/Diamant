@@ -38,8 +38,8 @@ export class TableFormComponent implements OnInit {
     const idTable = this.gameService.idGenerator();
     const countPlayer = 1;
     const isOk = false;
-    const tabPlayerName = [name];
-    const newRoom = new TableRoom(idTable, tabPlayerName, playersNumber, countPlayer, isOk);
+    const PlayerName = [name];
+    const newRoom = new TableRoom(idTable, PlayerName, playersNumber, countPlayer, isOk);
     this.gameService.createNewRoom(newRoom, idTable);
     this.router.navigate(['/Table', idTable]);
   }
