@@ -3,6 +3,7 @@ import * as firebase from 'firebase';
 import DataSnapshot = firebase.database.DataSnapshot;
 import {TableRoom} from '../Models/TableRoom.model';
 import {Subject} from 'rxjs';
+import {PlayersRoom} from '../Models/PlayersRoom.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,10 +13,16 @@ export class RoomTableService {
   tableRoom: TableRoom[] = [];
   RoomSubject = new Subject<TableRoom[]>();
 
+  playersRoom: PlayersRoom[] = [];
+  playersSubject = new Subject<PlayersRoom[]>();
+
   constructor() { }
 
   emitTableRoom(){
     this.RoomSubject.next(this.tableRoom);
+  }
+  emitPlayersRoom() {
+    this.playersSubject.next(this.playersRoom);
   }
 
   idGenerator(){
@@ -25,10 +32,21 @@ export class RoomTableService {
   savTableRoom(id: string){
     firebase.database().ref('/TableRoom/'+id).set(this.tableRoom);
   }
+
+  savPlayersRoom(id: string) {
+    firebase.database().ref('/Players/'+id).set(this.playersRoom);
+  }
+
   createNewRoom(tableRoom: TableRoom, id: string){
     this.tableRoom.push(tableRoom);
     this.savTableRoom(id);
     this.emitTableRoom();
+  }
+
+  creatPlayerRoom(playersRoom: PlayersRoom, id: string) {
+    this.playersRoom.push(playersRoom);
+    this.savPlayersRoom(id);
+    this.emitPlayersRoom();
   }
 
   getNewRoom(id: string) {
@@ -36,6 +54,14 @@ export class RoomTableService {
       .on('value', (data: DataSnapshot) => {
         this.tableRoom = data.val() ? data.val() : [];
         this.emitTableRoom();
+      });
+  }
+
+  getCountRoom(id: string) {
+    firebase.database().ref('/TableRoom/' + id + '/countPlayer')
+      .on('value', (data: DataSnapshot) => {
+        this.tableRoom = data.val() ? data.val() : [];
+        this.emitPlayersRoom();
       });
   }
 
