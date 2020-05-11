@@ -69,8 +69,9 @@ export class RoomTableService {
     // this.getRoomById(id).then(
     //   PlayerName => console.log(PlayerName)
     // );
-    const nametab = [name]
-    firebase.database().ref('/TableRoom/'+id+'/0/PlayerName/').push(nametab);
+    // const playername = this.getRoomById(id);
+
+    firebase.database().ref('/TableRoom/'+id+'/0/PlayerName/').push(name);
   }
 
 }
