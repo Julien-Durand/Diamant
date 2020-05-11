@@ -4,6 +4,7 @@ import {RoomTableService} from '../../../services/RoomTable.service';
 import * as firebase from 'firebase';
 import {Router} from '@angular/router';
 import {TableRoom} from '../../../Models/TableRoom.model';
+import {PlayersRoom} from '../../../Models/PlayersRoom.model';
 
 @Component({
   selector: 'app-table-form',
@@ -40,7 +41,10 @@ export class TableFormComponent implements OnInit {
     const isOk = false;
     const PlayerName = [name];
     const newRoom = new TableRoom(idTable, PlayerName, playersNumber, countPlayer, isOk);
+    const playersRoom = new PlayersRoom(name);
     this.gameService.createNewRoom(newRoom, idTable);
+    this.gameService.creatPlayerRoom(playersRoom, idTable);
+    console.log(this.gameService.getCountRoom(idTable));
     this.router.navigate(['/Table', idTable]);
   }
 
