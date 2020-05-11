@@ -4,6 +4,7 @@ import DataSnapshot = firebase.database.DataSnapshot;
 import {TableRoom} from '../Models/TableRoom.model';
 import {Subject} from 'rxjs';
 import {PlayersRoom} from '../Models/PlayersRoom.model';
+import {snapshotChanges} from '@angular/fire/database';
 
 @Injectable({
   providedIn: 'root'
@@ -58,9 +59,20 @@ export class RoomTableService {
   }
 
   getCountRoom(id: string) {
-    firebase.database().ref('/TableRoom/' + id + '/countPlayer')
-      .on('value', (data: DataSnapshot) => {
-        this.tableRoom = data.val() ? data.val() : [];
+    firebase.database().ref('/TableRoom/' + id)
+      .once('value', function(snapshot) {
+        snapshot.forEach(function(childSnapshot) {
+          const childData = childSnapshot.val();
+          return childData;
+        });
+      });
+  }
+  getMaxPlayer(id: string) {
+    firebase.database().ref('/TableRoom/' + id)
+      .on('value', (data) => {
+        data.forEach(function(snapshot) {
+          const test = snapshot.val();
+        });
         this.emitPlayersRoom();
       });
   }
@@ -96,8 +108,9 @@ export class RoomTableService {
     //   PlayerName => console.log(PlayerName)
     // );
     // const playername = this.getRoomById(id);
-
-    firebase.database().ref('/TableRoom/'+id+'/0/PlayerName/').push(name);
+    const truc = this.getCountRoom(id);
+    console.log(truc);
+    // firebase.database().ref('/TableRoom/'+id+'/0/PlayerName/').push(name);
   }
 
 }

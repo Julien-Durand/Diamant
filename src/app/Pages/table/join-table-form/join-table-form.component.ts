@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {RoomTableService} from '../../../services/RoomTable.service';
+import {TableRoom} from '../../../Models/TableRoom.model';
 
 @Component({
   selector: 'app-join-table-form',
