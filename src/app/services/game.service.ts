@@ -5,7 +5,7 @@ import DataSnapshot = firebase.database.DataSnapshot;
 @Injectable({
   providedIn: 'root'
 })
-export class GameServiceService {
+export class GameService {
 
   constructor() { }
 }

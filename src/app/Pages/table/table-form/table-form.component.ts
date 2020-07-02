@@ -5,6 +5,7 @@ import * as firebase from 'firebase';
 import {Router} from '@angular/router';
 import {TableRoom} from '../../../Models/TableRoom.model';
 import {PlayersRoom} from '../../../Models/PlayersRoom.model';
+import {AuthService} from '../../../services/auth.service';
 
 @Component({
   selector: 'app-table-form',
@@ -19,7 +20,8 @@ export class TableFormComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private gameService: RoomTableService,
-              private router: Router) { }
+              private router: Router,
+              private auth: AuthService) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -39,7 +41,8 @@ export class TableFormComponent implements OnInit {
     const idTable = this.gameService.idGenerator();
     const PlayerName = [name];
     const newRoom = new TableRoom(idTable, PlayerName, playersNumber, 1, false);
-    const playersRoom = new PlayersRoom(name);
+    const idPseudo = this.auth.currentUserId;
+    const playersRoom = new PlayersRoom(name, idPseudo);
     this.gameService.createNewRoom(newRoom, idTable);
     this.gameService.creatPlayerRoom(playersRoom, idTable);
     this.router.navigate(['/Table', idTable]);

@@ -1,4 +1,4 @@
 export class PlayersRoom {
-  constructor(public name: string) {
+  constructor(public name: string, public id: string) {
   }
 }

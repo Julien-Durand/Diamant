@@ -4,7 +4,8 @@ import DataSnapshot = firebase.database.DataSnapshot;
 import {TableRoom} from '../Models/TableRoom.model';
 import {Subject} from 'rxjs';
 import {PlayersRoom} from '../Models/PlayersRoom.model';
-import {snapshotChanges} from '@angular/fire/database';
+import {AngularFirestore} from '@angular/fire/firestore';
+import {AuthService} from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,8 @@ export class RoomTableService {
   playersRoom: PlayersRoom[] = [];
   playersSubject = new Subject<PlayersRoom[]>();
 
-  constructor() { }
+  constructor(private db: AngularFirestore,
+              private auth: AuthService) { }
 
   emitTableRoom(){
     this.RoomSubject.next(this.tableRoom);
@@ -34,19 +36,23 @@ export class RoomTableService {
     firebase.database().ref('/TableRoom/'+id).set(this.tableRoom);
   }
 
-  savPlayersRoom(id: string) {
-    firebase.database().ref('/Players/'+id).set(this.playersRoom);
+  addNewRoom(tableRoom: TableRoom, id: string) {
+    const room = {...tableRoom};
+    this.db.collection('/TableRoom').doc(id).set(room);
   }
 
   createNewRoom(tableRoom: TableRoom, id: string){
-    this.tableRoom.push(tableRoom);
-    this.savTableRoom(id);
+    this.addNewRoom(tableRoom, id);
     this.emitTableRoom();
   }
 
+  addPlayer(playersRoom: PlayersRoom, id: string) {
+    const player = {...playersRoom};
+    this.db.collection('/Players').doc(id).set(player);
+  }
+
   creatPlayerRoom(playersRoom: PlayersRoom, id: string) {
-    this.playersRoom.push(playersRoom);
-    this.savPlayersRoom(id);
+    this.addPlayer(playersRoom, id);
     this.emitPlayersRoom();
   }
 
@@ -57,60 +63,18 @@ export class RoomTableService {
         this.emitTableRoom();
       });
   }
-
-  getCountRoom(id: string) {
-    firebase.database().ref('/TableRoom/' + id)
-      .once('value', function(snapshot) {
-        snapshot.forEach(function(childSnapshot) {
-          const childData = childSnapshot.val();
-          return childData;
-        });
-      });
+  getTest() {
+    return this.db.collection('/TableRoom/' ).snapshotChanges();
   }
-  getMaxPlayer(id: string) {
-    firebase.database().ref('/TableRoom/' + id)
-      .on('value', (data) => {
-        data.forEach(function(snapshot) {
-          const test = snapshot.val();
-        });
-        this.emitPlayersRoom();
-      });
+  updateNewRoom(playersRoom: PlayersRoom, id: string){
+    const player = {...playersRoom};
+    this.db.collection('/Players').doc(id).set(player);
   }
 
-  getRoomById(id: string) {
-    // return new Promise(
-    //   (resolve, reject) => {
-    //     firebase.database().ref('/TableRoom/' + id + '/0/PlayerName').once('value').then(
-    //       (data: DataSnapshot) => {
-    //         resolve(data.val());
-    //       }, (error) => {
-    //         reject(error);
-    //       }
-    //     );
-    //   }
-    // );
-    firebase.database().ref('/TableRoom/' + id + '/0/PlayerName')
-      .on('value',(snap) => {
-      console.log(snap.val());
-    });
-  }
 
-  updateNewRoom(id: string, name: string){
-    // this.getRoomById(id).
-    //   then(PlayerName => {
-    //     console.log('PlayerName', PlayerName);
-    //     console.log(PlayerName.count);
-    // })
-    // .catch(err => {
-    //   console.log(err);
-    // });
-    // this.getRoomById(id).then(
-    //   PlayerName => console.log(PlayerName)
-    // );
-    // const playername = this.getRoomById(id);
-    const truc = this.getCountRoom(id);
-    console.log(truc);
-    // firebase.database().ref('/TableRoom/'+id+'/0/PlayerName/').push(name);
-  }
+
+
+
+
 
 }
